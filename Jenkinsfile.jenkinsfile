@@ -84,7 +84,7 @@ pipeline {
                 ansiblePlaybook(
                     playbook: 'test_playbook.yml',
                     inventory: 'inventory.ini',
-                    extraVars: 'vault_token=$VAULT_TOKEN'
+                    extraVars: 'vault_token=$VAULT_TOKEN',
                     //extras: '--private-key vm1_rsa'
                     colorized: true)
               }
