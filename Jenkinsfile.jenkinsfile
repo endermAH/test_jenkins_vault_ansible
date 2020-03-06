@@ -79,7 +79,7 @@ pipeline {
       stage('Start playbook'){
           steps {
               script {
-                  ansiblePlaybook credentialsId: 'vm1_rsa', inventory: 'inventory.ini', playbook: 'test_jenkins_vault_ansible/test_playbook.yml'
+                  ansiblePlaybook credentialsId: 'vm1_rsa', inventory: 'inventory.ini', playbook: 'test_playbook.yml'
               }
           }
       }
