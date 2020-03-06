@@ -2,7 +2,12 @@ pipeline {
    agent any
 
    stages {
-      stage('Create keys') {
+     stage('Get code'){
+         steps {
+             git 'https://github.com/endermAH/test_jenkins_vault_ansible'
+         }
+     }
+    stage('Create keys') {
          steps {
             script {
                 def secrets = [
@@ -35,7 +40,7 @@ pipeline {
             }
          }
       }
-      stage('Start playbook'){
+      stage('Create inventory'){
           steps {
               script {
                   def secrets = [
@@ -62,8 +67,16 @@ pipeline {
                          engineVersion: 2]
 
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
-                    ansiblePlaybook credentialsId: 'vm1_rsa', inventory: 'inventories/a/hosts', playbook: 'my_playbook.yml'
+                        sh 'touch inventory.ini'
+                        sh 'echo [all] > inventory.ini'
+                        sh 'echo $vm1_ansible_host\\ ansible_user=$vm1_ansible_user'
+                        sh 'echo $vm2_ansible_host\\ ansible_user=$vm2_ansible_user'
                 }
+
+      stage('Start playbook'){
+          steps {
+              script {
+                  ansiblePlaybook credentialsId: 'vm1_rsa', inventory: 'inventory.ini', playbook: 'test_jenkins_vault_ansible/test_playbook.yml'
               }
           }
       }
