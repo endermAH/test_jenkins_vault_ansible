@@ -1,0 +1,71 @@
+pipeline {
+   agent any
+
+   stages {
+      stage('Create keys') {
+         steps {
+            script {
+                def secrets = [
+                    [
+                        path: 'kv/environments/${ENVIRONMENT}/vm1',
+                        engineVersion: 2,
+                        secretValues: [
+                            [envVar: 'vm1_ansible_key', vaultKey: 'ansible_key'],
+                            ]
+                    ],
+                    [
+                        path: 'kv/environments/${ENVIRONMENT}/vm2',
+                        engineVersion: 2,
+                        secretValues: [
+                            [envVar: 'vm2_ansible_key', vaultKey: 'ansible_key'],
+                            ]
+                    ],
+                    ]
+
+                def configuration = [vaultUrl: 'http://10.109.20.235:8200',
+                         vaultCredentialId: 'remote-vault-root-token',
+                         engineVersion: 2]
+
+                withVault([configuration: configuration, vaultSecrets: secrets]) {
+                    sh 'touch vm1_rsa'
+                    sh 'echo $vm1_ansible_key > vm1_rsa'
+                    sh 'touch vm2_rsa'
+                    sh 'echo $vm2_ansible_key > vm2_rsa'
+                }
+            }
+         }
+      }
+      stage('Start playbook'){
+          steps {
+              script {
+                  def secrets = [
+                    [
+                        path: 'kv/environments/${ENVIRONMENT}/vm1',
+                        engineVersion: 2,
+                        secretValues: [
+                            [envVar: 'vm1_ansible_user', vaultKey: 'ansible_user'],
+                            [envVar: 'vm1_ansible_host', vaultKey: 'ansible_host'],
+                            ]
+                    ],
+                    [
+                        path: 'kv/environments/${ENVIRONMENT}/vm2',
+                        engineVersion: 2,
+                        secretValues: [
+                            [envVar: 'vm2_ansible_user', vaultKey: 'ansible_user'],
+                            [envVar: 'vm2_ansible_host', vaultKey: 'ansible_host'],
+                            ]
+                    ],
+                    ]
+
+                def configuration = [vaultUrl: 'http://10.109.20.235:8200',
+                         vaultCredentialId: 'remote-vault-root-token',
+                         engineVersion: 2]
+
+                withVault([configuration: configuration, vaultSecrets: secrets]) {
+                    ansiblePlaybook credentialsId: 'vm1_rsa', inventory: 'inventories/a/hosts', playbook: 'my_playbook.yml'
+                }
+              }
+          }
+      }
+   }
+}
