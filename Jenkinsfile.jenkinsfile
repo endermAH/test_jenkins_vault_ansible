@@ -84,7 +84,7 @@ pipeline {
                 ansiblePlaybook(
                     playbook: 'test_playbook.yml',
                     inventory: 'inventory.ini',
-                    colorized: true
+                    colorized: true,
                     extraVars: {
                       extraVar('vault_token', $VAULT_TOKEN, false),
                     }
