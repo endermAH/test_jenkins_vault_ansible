@@ -77,13 +77,15 @@ pipeline {
       }
 
       stage('Start playbook'){
-        ansiColor('xterm') {
-            ansiblePlaybook(
-                playbook: 'test_playbook.yml',
-                inventory: 'inventory.ini',
-                //extras: '--private-key vm1_rsa'
-                colorized: true)
-          }
-      }
+        steps{
+          ansiColor('xterm') {
+              ansiblePlaybook(
+                  playbook: 'test_playbook.yml',
+                  inventory: 'inventory.ini',
+                  //extras: '--private-key vm1_rsa'
+                  colorized: true)
+            }
+        }
+    }
    }
 }
