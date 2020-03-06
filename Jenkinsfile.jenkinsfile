@@ -86,7 +86,7 @@ pipeline {
                     inventory: 'inventory.ini',
                     colorized: true,
                     extraVars: [
-                      vault_token: $VAULT_TOKEN]
+                      vault_token: VAULT_TOKEN]
                 )
               }
           }
