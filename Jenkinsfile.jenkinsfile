@@ -33,9 +33,9 @@ pipeline {
 
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                     sh 'touch vm1_rsa'
-                    writeFile([file: 'vm1_rsa', text: '${vm1_ansible_key}'])
+                    writeFile([file: 'vm1_rsa', text: vm1_ansible_key])
                     sh 'touch vm2_rsa'
-                    writeFile([file: 'vm2_rsa', text: '${vm2_ansible_key}'])
+                    writeFile([file: 'vm2_rsa', text: vm2_ansible_key])
                 }
             }
          }
