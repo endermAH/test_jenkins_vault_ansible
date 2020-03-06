@@ -5,4 +5,4 @@
   tasks:
     - name: Do something with credentials
       debug:
-        msg: "{{ lookup('hashi_vault', 'secret=kv/data/environments/env1/ansible_secret token=vault_token url=http://10.109.20.235:8200/') }}"
+        msg: "{{ lookup('hashi_vault', 'secret=kv/data/environments/env1/ansible_secret token={{ vault_token }} url=http://10.109.20.235:8200/') }}"
