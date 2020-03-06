@@ -84,9 +84,11 @@ pipeline {
                 ansiblePlaybook(
                     playbook: 'test_playbook.yml',
                     inventory: 'inventory.ini',
-                    extraVars: 'vault_token=$VAULT_TOKEN',
-                    //extras: '--private-key vm1_rsa'
-                    colorized: true)
+                    colorized: true
+                    extraVars: {
+                      extraVar('vault_token', $VAULT_TOKEN, false),
+                    }
+                )
               }
           }
        }
