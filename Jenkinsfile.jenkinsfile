@@ -72,6 +72,8 @@ pipeline {
                         sh 'echo $vm1_ansible_host\\ ansible_user=$vm1_ansible_user'
                         sh 'echo $vm2_ansible_host\\ ansible_user=$vm2_ansible_user'
                 }
+            }
+        }
 
       stage('Start playbook'){
           steps {
