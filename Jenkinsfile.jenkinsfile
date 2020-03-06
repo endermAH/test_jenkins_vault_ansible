@@ -69,8 +69,8 @@ pipeline {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                         sh 'touch inventory.ini'
                         sh 'echo [all] > inventory.ini'
-                        sh 'echo $vm1_ansible_host\\ ansible_user=$vm1_ansible_user'
-                        sh 'echo $vm2_ansible_host\\ ansible_user=$vm2_ansible_user'
+                        sh 'echo $vm1_ansible_host\\ ansible_user=$vm1_ansible_user >> inventory.ini'
+                        sh 'echo $vm2_ansible_host\\ ansible_user=$vm2_ansible_user >> inventory.ini'
                 }
             }
          }
