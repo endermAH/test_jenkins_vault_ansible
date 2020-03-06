@@ -85,9 +85,8 @@ pipeline {
                     playbook: 'test_playbook.yml',
                     inventory: 'inventory.ini',
                     colorized: true,
-                    extraVars: {
-                      extraVar: ['vault_token', $VAULT_TOKEN, false]
-                    }
+                    extraVars: [
+                      vault_token: $VAULT_TOKEN]
                 )
               }
           }
