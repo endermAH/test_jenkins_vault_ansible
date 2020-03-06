@@ -79,14 +79,17 @@ pipeline {
 
       stage('Start playbook'){
         steps{
-          ansiColor('xterm') {
-              ansiblePlaybook(
-                  playbook: 'test_playbook.yml',
-                  inventory: 'inventory.ini',
-                  //extras: '--private-key vm1_rsa'
-                  colorized: true)
-            }
-        }
+          withCredentials([[$class: 'VaultTokenCredentialBinding', credentialsId: 'vault-root-token']]) {
+            ansiColor('xterm') {
+                ansiblePlaybook(
+                    playbook: 'test_playbook.yml',
+                    inventory: 'inventory.ini',
+                    extraVars: 'vault_token=$VAULT_TOKEN'
+                    //extras: '--private-key vm1_rsa'
+                    colorized: true)
+              }
+          }
+       }
     }
 
     stage('Clean workspace'){
