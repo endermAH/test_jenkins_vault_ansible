@@ -79,7 +79,7 @@ pipeline {
 
       stage('Start playbook'){
         steps{
-          withCredentials([string(credentialsId: 'vault-root-token', variable: 'VAULT_TOKEN')]) {
+          withCredentials([[$class: 'VaultTokenCredentialBinding', credentialsId: 'vault-root-token', vaultAddr: 'http://10.109.20.235:8200']]) {
             ansiColor('xterm') {
                 ansiblePlaybook(
                     playbook: 'test_playbook.yml',
