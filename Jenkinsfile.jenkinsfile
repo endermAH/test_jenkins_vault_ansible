@@ -28,7 +28,7 @@ pipeline {
                     ]
 
                 def configuration = [vaultUrl: 'http://10.109.20.235:8200',
-                         vaultCredentialId: 'remote-vault-root-token',
+                         vaultCredentialId: 'vault-root-token',
                          engineVersion: 2]
 
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
@@ -63,7 +63,7 @@ pipeline {
                     ]
 
                 def configuration = [vaultUrl: 'http://10.109.20.235:8200',
-                         vaultCredentialId: 'remote-vault-root-token',
+                         vaultCredentialId: 'vault-root-token',
                          engineVersion: 2]
 
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
