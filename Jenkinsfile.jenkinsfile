@@ -36,6 +36,7 @@ pipeline {
                     writeFile([file: 'vm1_rsa', text: vm1_ansible_key])
                     sh 'touch vm2_rsa'
                     writeFile([file: 'vm2_rsa', text: vm2_ansible_key])
+                    sh 'chmod 600 vm1_rsa; chmod 600 vm2_rsa'
                 }
             }
          }
@@ -86,6 +87,14 @@ pipeline {
                   colorized: true)
             }
         }
+    }
+
+    stage('Clean workspace'){
+      steps{
+        script{
+          cleanWs()
+        }
+      }
     }
    }
 }
