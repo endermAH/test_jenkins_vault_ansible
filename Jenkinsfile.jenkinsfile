@@ -61,6 +61,15 @@ pipeline {
                             [envVar: 'vm2_ansible_host', vaultKey: 'ansible_host'],
                             ]
                     ],
+                    [
+                        path: 'kv/environments/${ENVIRONMENT}/vm3',
+                        engineVersion: 2,
+                        secretValues: [
+                            [envVar: 'vm3_ansible_user', vaultKey: 'ansible_user'],
+                            [envVar: 'vm3_ansible_host', vaultKey: 'ansible_host'],
+                            [envVar: 'vm3_ansible_pass', vaultKey: 'ansible_pass'],
+                            ]
+                    ],
                     ]
 
                 def configuration = [vaultUrl: 'http://10.109.20.235:8200',
@@ -72,6 +81,7 @@ pipeline {
                         sh 'echo [all] > inventory.ini'
                         sh 'echo $vm1_ansible_host\\ ansible_user=$vm1_ansible_user\\ ansible_ssh_private_key_file=vm1_rsa >> inventory.ini'
                         sh 'echo $vm2_ansible_host\\ ansible_user=$vm2_ansible_user\\ ansible_ssh_private_key_file=vm2_rsa >> inventory.ini'
+                        sh 'echo $vm3_ansible_host\\ ansible_user=$vm3_ansible_user\\ ansible_pass=$vm3_ansible_pass >> inventory.ini'
                 }
             }
          }
