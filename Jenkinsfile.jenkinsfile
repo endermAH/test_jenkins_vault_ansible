@@ -79,9 +79,9 @@ pipeline {
                 withVault([configuration: configuration, vaultSecrets: secrets]) {
                         sh 'touch inventory.ini'
                         sh 'echo [all] > inventory.ini'
-                        sh 'echo vm1 ansible_host=$vm1_ansible_host\\ ansible_user=$vm1_ansible_user\\ ansible_ssh_private_key_file=vm1_rsa >> inventory.ini'
-                        sh 'echo vm2 ansible_host=$vm2_ansible_host\\ ansible_user=$vm2_ansible_user\\ ansible_ssh_private_key_file=vm2_rsa >> inventory.ini'
-                        sh 'echo vm3 ansible_host=$vm3_ansible_host\\ ansible_user=$vm3_ansible_user\\ ansible_pass=$vm3_ansible_pass >> inventory.ini'
+                        sh 'echo vm1\\ ansible_host=$vm1_ansible_host\\ ansible_user=$vm1_ansible_user\\ ansible_ssh_private_key_file=vm1_rsa >> inventory.ini'
+                        sh 'echo vm2\\ ansible_host=$vm2_ansible_host\\ ansible_user=$vm2_ansible_user\\ ansible_ssh_private_key_file=vm2_rsa >> inventory.ini'
+                        sh 'echo vm3\\ ansible_host=$vm3_ansible_host\\ ansible_user=$vm3_ansible_user\\ ansible_pass=$vm3_ansible_pass >> inventory.ini'
                 }
             }
          }
